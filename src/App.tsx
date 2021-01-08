@@ -1,11 +1,13 @@
 import React from 'react';
-import Example from './components/Example'
+import TaskManagementForm from './components/TaskManagementForm/index'
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <h1>Hello Alabama</h1>
-      <Example exampleProp={"someText"} />
+      <div>
+        <TaskManagementForm />  
+      </div>
     </div>
   );
 }
