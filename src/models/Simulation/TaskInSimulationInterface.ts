@@ -1,4 +1,4 @@
-enum TaskState  {
+export enum TaskState  {
     WORKING = 0,
     INTERRUPTED = 1,
     INACTIVE = 2
@@ -6,6 +6,6 @@ enum TaskState  {
 }
 
 export interface TasksInSimulation {
-    simulationMoment: number
     taskState: TaskState
+    isTaskOverdue: boolean
 }

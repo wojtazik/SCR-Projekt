@@ -1,0 +1,53 @@
+.chart-unit {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  border: 1px solid black;
+  box-sizing: border-box;
+
+  &--inactive {
+    visibility: hidden;
+  }
+
+  &--interrupted {
+    height: 5px;
+  }
+
+  &__period-arrow {
+    position: absolute;
+    left: -1px;
+    top: -10px;
+    width: 1px;
+    height: 15px;
+    background: #000;
+
+    &::after {
+      content: '';
+      width: 5px;
+      height: 5px;
+      position: absolute;
+      left: -2px;
+      top: 0;
+      border-top: 1px solid black;
+      border-right: 1px solid black;
+      transform: rotate(-45deg);
+    }
+  }
+
+  &__deadline-arrow {
+    content: '';
+    width: 5px;
+    height: 5px;
+    position: absolute;
+    left: -3px;
+    top: -18px;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    transform: rotate(-45deg);
+
+    &--overdue {
+      border-bottom: 1px solid red;
+      border-left: 1px solid red;
+    }
+  }
+}

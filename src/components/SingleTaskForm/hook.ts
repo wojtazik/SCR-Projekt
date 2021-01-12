@@ -33,7 +33,8 @@ const useComponent = (props: SingleTaskFormComponentInterface) => {
       executionTime: executionTimeLocal,
       period: periodLocal,
       deadline: deadlineLocal,
-      priority: priorityLocal
+      priority: priorityLocal,
+      taskInSimulation: []
     }
   }, [executionTimeLocal, periodLocal, deadlineLocal, priorityLocal])
 
