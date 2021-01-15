@@ -1,0 +1,30 @@
+.gannt-chart {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+  margin: 5px;
+  margin-bottom: 15px;
+  position: relative;
+
+  &__axis {
+    height: 2px;
+    background: #000;
+    position: absolute;
+  }
+
+  &__time-unit {
+    height: 10px;
+    width: 1px;
+    background: #000;
+    position: absolute;
+    bottom: -5px;
+  }
+
+  &__unit-count {
+    position: absolute;
+    left: -4px;
+    top: 9px;
+    font-size: 12px;
+  }
+}

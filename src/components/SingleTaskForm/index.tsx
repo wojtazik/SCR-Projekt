@@ -21,7 +21,7 @@ const SingleTaskForm: React.FC<SingleTaskFormComponentInterface> = (props: Singl
     onTaskRemove,
     inputErrors
   } = useComponent(props)
-  console.log(inputErrors)
+
   return (
     <>
       <div className='single-task'>
@@ -71,7 +71,8 @@ SingleTaskForm.defaultProps = {
     deadline: 0,
     executionTime: 0,
     period: 0,
-    priority: 0
+    priority: 0,
+    taskInSimulation: []
   },
   index: 0,
   tasksArrayIsEmpty: false
