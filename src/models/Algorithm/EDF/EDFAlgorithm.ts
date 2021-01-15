@@ -1,16 +1,18 @@
 import { cloneDeep, findIndex, indexOf, reduce } from 'lodash'
-import { TaskState } from '../../Simulation/TaskInSimulationInterface'
+import { TasksInSimulation, TaskState } from '../../Simulation/TaskInSimulationInterface'
 import { Task } from '../../Task/TaskInterface'
 
 /**
  * UWAGA: JESZCZE NIE DZIAŁA W PEŁNI
  */
 
-const resolveEDF = (tasks: Task[], simulationTime: number): Task[] => {
+const resolveEDF = (tasks: Task[], simulationTime: number): Array<TasksInSimulation[]> => {
   let tasksToModify: Task[] = cloneDeep(tasks)
   let tasksCurrentDeadline = tasks.map((task: Task) => task.deadline)
   let tasksCurrentUnitsLeft = tasks.map((task:Task) => task.executionTime)
   let tasksFinishedCountForDl = tasks.map((task: Task) => 0)
+
+  let tasksInSimulation: Array<TasksInSimulation[]> = []
 
 
   /*
@@ -72,15 +74,16 @@ const resolveEDF = (tasks: Task[], simulationTime: number): Task[] => {
     }
 
     // USTAWIENIE TASKÓW W STANIE
-    tasksToModify.forEach((task: Task, index: number) => {
-      tasksToModify[index].taskInSimulation[i] = {
-        taskState: taskToExecIndex === index ? TaskState.WORKING : tasksFinishedCountForDl[i] > 0 && tasksCurrentUnitsLeft[i] > 0 ? TaskState.INTERRUPTED : TaskState.INTERRUPTED,
-        isTaskOverdue: i === tasksToModify[index].deadline && tasksCurrentUnitsLeft[index] > 0
-      }
-    })
+
+    // tasksToModify.forEach((task: Task, index: number) => {
+    //   tasksToModify[index].taskInSimulation[i] = {
+    //     taskState: taskToExecIndex === index ? TaskState.WORKING : tasksFinishedCountForDl[i] > 0 && tasksCurrentUnitsLeft[i] > 0 ? TaskState.INTERRUPTED : TaskState.INTERRUPTED,
+    //     isTaskOverdue: i === tasksToModify[index].deadline && tasksCurrentUnitsLeft[index] > 0
+    //   }
+    // })
   }
 
-  return tasksToModify
+  return tasksInSimulation
 }
 
 const selectTaskToExecute = (currentUnits: number[], currentDeadlines: number[]) => {

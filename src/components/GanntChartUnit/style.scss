@@ -1,6 +1,8 @@
 .chart-unit {
-  width: 20px;
-  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  max-height: 20px;
+  max-width: 20px;
   position: relative;
   border: 1px solid black;
   box-sizing: border-box;
@@ -10,16 +12,18 @@
   }
 
   &--interrupted {
-    height: 5px;
+    min-height: 7px;
+    max-height: 7px;
   }
 
   &__period-arrow {
     position: absolute;
     left: -1px;
-    top: -10px;
+    bottom: 0;
     width: 1px;
-    height: 15px;
+    height: 26px;
     background: #000;
+    visibility: visible;
 
     &::after {
       content: '';
@@ -35,17 +39,28 @@
   }
 
   &__deadline-arrow {
-    content: '';
-    width: 5px;
-    height: 5px;
+    visibility: visible;
+    height: 29px;
+    width: 1px;
+    background: #000;
+    transform: translateX(-1px);
     position: absolute;
-    left: -3px;
-    top: -18px;
-    border-bottom: 1px solid black;
-    border-left: 1px solid black;
-    transform: rotate(-45deg);
+    bottom: 0;
 
-    &--overdue {
+    &::after {
+      content: '';
+      width: 5px;
+      height: 5px;
+      position: absolute;
+      left: -3px;
+      top: -7px;
+      border-bottom: 1px solid black;
+      border-left: 1px solid black;
+      transform: rotate(-45deg);
+    }
+    
+
+    &--overdue::after {
       border-bottom: 1px solid red;
       border-left: 1px solid red;
     }

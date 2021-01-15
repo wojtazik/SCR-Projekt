@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect } from 'react'
 import './style.scss'
-import { Task } from '../../models/Task/TaskInterface'
+import { Task, taskParams } from '../../models/Task/TaskInterface'
 import GanntChartUnit from '../GanntChartUnit'
+import { TasksInSimulation } from '../../models/Simulation/TaskInSimulationInterface'
 
 export type GanntChartInterface = {
   task: Task,
-  simulationTime: number
+  simulationTime: number,
+  taskInSimulation: TasksInSimulation[]
 }
 
 const GanntChart = (props: GanntChartInterface) => {
@@ -23,13 +25,18 @@ const GanntChart = (props: GanntChartInterface) => {
     
     const rowsToRender: JSX.Element[] = []
     const randomColor = generateRandomColor()
-    
+    let periodCount = 0
     for(let i = 0; i < props.simulationTime; i++) {
+      if (i !== 0 && i % props.task.period === 0) {
+        periodCount++
+      }
       rowsToRender.push(
         <GanntChartUnit 
           simulationMoment={i}
           task={props.task}
           taskColor={randomColor}
+          taskInSimulationMoment={props.taskInSimulation[i]}
+          periodCount={periodCount}
         />
       )
     }
@@ -64,8 +71,8 @@ const GanntChart = (props: GanntChartInterface) => {
 
   return (
     <div className='gannt-chart'>
-      {renderGanntChart()}
-      {renderAxis()}
+      {props.taskInSimulation.length && renderGanntChart()}
+      {props.taskInSimulation.length && renderAxis()}
     </div>
   )
 }

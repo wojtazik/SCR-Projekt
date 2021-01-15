@@ -71,8 +71,7 @@ SingleTaskForm.defaultProps = {
     deadline: 0,
     executionTime: 0,
     period: 0,
-    priority: 0,
-    taskInSimulation: []
+    priority: 0
   },
   index: 0,
   tasksArrayIsEmpty: false

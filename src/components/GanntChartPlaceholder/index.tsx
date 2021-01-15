@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import useComponent from './hook'
 import './style.scss'
 import { Task } from '../../models/Task/TaskInterface'
 import GanntChart from '../GanntChart'
+import resolvePriorityAlgorithm from '../../models/Algorithm/Priority/PriorityAlgorithm'
 
 const GanntChartPlaceholder = () => {
   
-  const { tasks, selectedAlgorithm, simulationTime } = useComponent()
-
-
-  const renderTasksCharts = () => tasks.map((task: Task) => (
-    <GanntChart task={task} simulationTime={simulationTime} />  
+  const { tasks, selectedAlgorithm, simulationTime, tasksInSimulation } = useComponent()
+  console.log(tasksInSimulation)
+  const renderTasksCharts = () => tasks.map((task: Task, index: number) => (
+    <GanntChart task={task} simulationTime={simulationTime} taskInSimulation={tasksInSimulation[index]} />  
   ))
 
   const renderInvalidArgsInfo = () => (
@@ -19,7 +19,7 @@ const GanntChartPlaceholder = () => {
 
   return (
     <div className='gannt-chart-placeholder'>
-      {(!tasks.length || !selectedAlgorithm || simulationTime < 1 || tasks[0].taskInSimulation.length === 0) ? renderInvalidArgsInfo() : renderTasksCharts()}
+      { tasksInSimulation.length && tasksInSimulation.length === tasks.length ? renderTasksCharts() : renderInvalidArgsInfo()}
     </div>
   )
 }
