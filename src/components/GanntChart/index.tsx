@@ -22,7 +22,6 @@ const GanntChart = (props: GanntChartInterface) => {
   }
 
   const renderGanntChart = useCallback(() => {
-    
     const rowsToRender: JSX.Element[] = []
     const randomColor = generateRandomColor()
     let periodCount = 0
@@ -42,7 +41,7 @@ const GanntChart = (props: GanntChartInterface) => {
     }
 
     return rowsToRender
-  }, [props.task, props.simulationTime])
+  }, [props.task, props.simulationTime, props.taskInSimulation])
 
   const renderAxis = useCallback(() => {
     const { simulationTime } = props
@@ -71,8 +70,8 @@ const GanntChart = (props: GanntChartInterface) => {
 
   return (
     <div className='gannt-chart'>
-      {props.taskInSimulation.length && renderGanntChart()}
-      {props.taskInSimulation.length && renderAxis()}
+      {props.taskInSimulation.length && props.taskInSimulation.length === props.simulationTime && renderGanntChart()}
+      {props.taskInSimulation.length && props.taskInSimulation.length === props.simulationTime && renderAxis()}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Task } from '../../models/Task/TaskInterface'
 import useComponent from './hook'
 import { taskParams } from '../../models/Task/TaskInterface'
@@ -22,11 +22,26 @@ const SingleTaskForm: React.FC<SingleTaskFormComponentInterface> = (props: Singl
     inputErrors
   } = useComponent(props)
 
+  const renderInputErrors = useCallback(() => {
+    const inputErrorsMessages: JSX.Element[] = []
+    for(const key in inputErrors) {
+      if(inputErrors[key].length > 0) {
+        inputErrors[key].forEach((inputError: ErrorInterface) => {
+          const errorElement = <p>{inputError.errorMessage}</p>
+          inputErrorsMessages.push(errorElement)
+        })
+      }
+    }
+
+    return inputErrorsMessages
+  }, [inputErrors])
+
   return (
     <>
       <div className='single-task'>
         <input 
           className='single-task__field'
+          min={0}
           type="number"
           value={executionTimeLocal} 
           onChange={(event: React.FormEvent<HTMLInputElement>) => { 
@@ -35,6 +50,7 @@ const SingleTaskForm: React.FC<SingleTaskFormComponentInterface> = (props: Singl
         />
         <input 
           className='single-task__field'
+          min={0}
           type="number"
           value={periodLocal} 
           onChange={(event: React.FormEvent<HTMLInputElement>) => { 
@@ -44,6 +60,7 @@ const SingleTaskForm: React.FC<SingleTaskFormComponentInterface> = (props: Singl
         <input 
           className='single-task__field'
           type="number"
+          min={0}
           value={deadlineLocal} 
           onChange={(event: React.FormEvent<HTMLInputElement>) => { 
             onTaskParamChange(parseInt(event.currentTarget.value), taskParams.DEADLINE) 
@@ -52,6 +69,7 @@ const SingleTaskForm: React.FC<SingleTaskFormComponentInterface> = (props: Singl
         <input 
           className='single-task__field'
           type="number"
+          min={0}
           value={priorityLocal} 
           onChange={(event: React.FormEvent<HTMLInputElement>) => { 
             onTaskParamChange(parseInt(event.currentTarget.value), taskParams.PRIORITY) 
@@ -60,7 +78,7 @@ const SingleTaskForm: React.FC<SingleTaskFormComponentInterface> = (props: Singl
         <button onClick={onTaskRemove}>Delete</button>
       </div>
       <div>
-        {inputErrors.map((inputError: ErrorInterface) => (<p>{inputError.errorMessage}</p>))}
+        {renderInputErrors()}
       </div>
     </>
   )

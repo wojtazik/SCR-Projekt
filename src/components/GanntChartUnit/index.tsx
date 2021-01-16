@@ -12,7 +12,6 @@ export type GanntChartUnitInterface = {
 }
 
 const GanntChartUnit = (props: GanntChartUnitInterface) => {
-
   const renderPeriodArrow = useCallback(() => (
     <div className='chart-unit__period-arrow' />
   ), [props])
@@ -32,10 +31,8 @@ const GanntChartUnit = (props: GanntChartUnitInterface) => {
           return 'working'
       }
     }
-
-    console.log()
-
     const shouldRenderDeadlineArrow = props.task.period === props.task.deadline ? props.simulationMoment % props.task.deadline === 0 : props.simulationMoment === props.periodCount * props.task.period + props.task.deadline
+
     return (
     <div 
       className={`chart-unit chart-unit--${resolveClass()}`}

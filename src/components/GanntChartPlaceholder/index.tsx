@@ -8,7 +8,7 @@ import resolvePriorityAlgorithm from '../../models/Algorithm/Priority/PriorityAl
 const GanntChartPlaceholder = () => {
   
   const { tasks, selectedAlgorithm, simulationTime, tasksInSimulation } = useComponent()
-  console.log(tasksInSimulation)
+
   const renderTasksCharts = () => tasks.map((task: Task, index: number) => (
     <GanntChart task={task} simulationTime={simulationTime} taskInSimulation={tasksInSimulation[index]} />  
   ))
