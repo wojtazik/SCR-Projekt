@@ -1,16 +1,17 @@
 import React, { useCallback } from 'react'
-import { TaskState } from '../../models/Simulation/TaskInSimulationInterface'
+import { TasksInSimulation, TaskState } from '../../models/Simulation/TaskInSimulationInterface'
 import { Task } from '../../models/Task/TaskInterface'
 import './style.scss'
 
 export type GanntChartUnitInterface = {
   task: Task
   simulationMoment: number,
-  taskColor: string
+  taskColor: string,
+  taskInSimulationMoment: TasksInSimulation,
+  periodCount: number
 }
 
 const GanntChartUnit = (props: GanntChartUnitInterface) => {
-
   const renderPeriodArrow = useCallback(() => (
     <div className='chart-unit__period-arrow' />
   ), [props])
@@ -21,7 +22,7 @@ const GanntChartUnit = (props: GanntChartUnitInterface) => {
 
   const renderChartUnit = useCallback((): JSX.Element => {
     const resolveClass = () => {
-      switch(props.task.taskInSimulation[props.simulationMoment].taskState) {
+      switch(props.taskInSimulationMoment.taskState) {
         case TaskState.INACTIVE:
           return 'inactive'
         case TaskState.INTERRUPTED:
@@ -30,14 +31,15 @@ const GanntChartUnit = (props: GanntChartUnitInterface) => {
           return 'working'
       }
     }
+    const shouldRenderDeadlineArrow = props.task.period === props.task.deadline ? props.simulationMoment % props.task.deadline === 0 : props.simulationMoment === props.periodCount * props.task.period + props.task.deadline
 
     return (
     <div 
       className={`chart-unit chart-unit--${resolveClass()}`}
       style={{background: props.taskColor}}
       >
-        {props.simulationMoment === props.task.period && renderPeriodArrow()}
-        {props.simulationMoment === props.task.deadline && renderDeadlineArrow(props.task.taskInSimulation[props.simulationMoment].isTaskOverdue)}
+        {props.simulationMoment % props.task.period === 0 && renderPeriodArrow()}
+        {shouldRenderDeadlineArrow && renderDeadlineArrow(props.taskInSimulationMoment.isTaskOverdue)}
       </div>
     )
   }, [props])

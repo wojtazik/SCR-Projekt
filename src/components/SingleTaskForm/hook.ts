@@ -7,6 +7,8 @@ import { Task, taskParams } from '../../models/Task/TaskInterface'
 import { setTasks } from '../../store/actions/actions'
 import usePrevious from '../../hook/usePrevious'
 import { ErrorInterface } from '../../models/Error/ErrorInterface'
+import { InputsErrors } from '../../models/Error/InputErrorsInterface'
+import manageErrors from '../../util/manageInputErrors'
 
 export type SingleTaskFormHookInterface = {
   executionTimeLocal: number,
@@ -15,7 +17,7 @@ export type SingleTaskFormHookInterface = {
   priorityLocal: number,
   onTaskParamChange: (value: number, paramName: string) => void,
   onTaskRemove: VoidFunction,
-  inputErrors: ErrorInterface[]
+  inputErrors: InputsErrors
 }
 
 const useComponent = (props: SingleTaskFormComponentInterface) => {
@@ -26,15 +28,20 @@ const useComponent = (props: SingleTaskFormComponentInterface) => {
   const [deadlineLocal, onSetDeadlineLocal] = useState<number>((props.task as Task).deadline)
   const [priorityLocal, onSetPriorityLocal] = useState<number>((props.task as Task).priority)
   const prevTasksLength = usePrevious(tasks.length)
-  const [inputErrors, onSetInputErrors] = useState<ErrorInterface[]>([])
+  const [inputErrors, onSetInputErrors] = useState<InputsErrors>({
+    [taskParams.DEADLINE]: [],
+    [taskParams.PERIOD]: [],
+    [taskParams.EXECUTION_TIME]: [],
+    [taskParams.PRIORITY]: [],
+
+  })
 
   const prepareTaskObject = useCallback((): Task => {
     return {
       executionTime: executionTimeLocal,
       period: periodLocal,
       deadline: deadlineLocal,
-      priority: priorityLocal,
-      taskInSimulation: []
+      priority: priorityLocal
     }
   }, [executionTimeLocal, periodLocal, deadlineLocal, priorityLocal])
 
@@ -66,26 +73,14 @@ const useComponent = (props: SingleTaskFormComponentInterface) => {
     onSetPriorityLocal(value)
   }, [onSetPriorityLocal])
 
-  const manageInputErrors = useCallback((value: number, paramName: string) => {
-    if(!value) {
-      onSetInputErrors([
-        ...inputErrors,
-        {
-          errorField: paramName,
-          errorMessage: `Field ${paramName} must be greater than 0`
-        }
-      ])
-    } else {
-      if(inputErrors.filter((inputError: ErrorInterface) => inputError.errorField === paramName)) {
-        const inputErrorsCopy = cloneDeep(inputErrors).filter((inputErr: ErrorInterface) => inputErr.errorField !== paramName)
-        onSetInputErrors(inputErrorsCopy)
-      }
-    }
-  }, [onSetInputErrors])
+  const manageInputErrors = useCallback(() => {
+    const inputErr = manageErrors(executionTimeLocal, periodLocal, deadlineLocal, priorityLocal)
+
+    onSetInputErrors(inputErr)
+    return inputErr
+  }, [executionTimeLocal, periodLocal, deadlineLocal, priorityLocal, onSetInputErrors])
 
   const onTaskParamChange = useCallback((value: number, paramName: string) => {
-    manageInputErrors(value, paramName)
-
     switch(paramName) {
       case taskParams.EXECUTION_TIME: 
         onUpdateExecutionTimeLocal(value)
@@ -114,7 +109,13 @@ const useComponent = (props: SingleTaskFormComponentInterface) => {
 
 
   useEffect(() => {
-    if(executionTimeLocal > 0 && periodLocal > 0 && deadlineLocal > 0 && priorityLocal > 0) {
+    const errors: InputsErrors = manageInputErrors()
+    if ( 
+        errors[taskParams.EXECUTION_TIME].length === 0 &&
+        errors[taskParams.PERIOD].length === 0 &&
+        errors[taskParams.DEADLINE].length === 0 &&
+        errors[taskParams.PRIORITY].length === 0 
+      ) {
       tasks.length > 0 ? updateTaskState() : createFirstTask()
     }
   }, [

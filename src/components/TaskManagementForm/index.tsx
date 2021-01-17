@@ -45,7 +45,7 @@ const TaskManagementForm = (props: TaskManagementComponentInterface) => {
         </select>
         <button className="task-management__new-task" onClick={onChangeShouldAddEmptyTaskLine}>New task</button>
         <label>Set simulation time:</label>
-        <input type="number" max={200} onChange={onSetSimulationTime}/>
+        <input type="number" max={200} min={0} onChange={onSetSimulationTime}/>
       </div>
 
       <div className="task-management__tasks">

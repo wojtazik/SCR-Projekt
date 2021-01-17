@@ -1,6 +1,7 @@
 import { AlgorithmType } from "../../models/Algorithm/AlgorithmType";
+import { TasksInSimulation } from "../../models/Simulation/TaskInSimulationInterface";
 import { Task } from "../../models/Task/TaskInterface";
-import { ISetAlgorithm, ISetProcessorUsage, ISetSimulationTime, ISetTasks, SET_ALGORITHM, SET_PROCESSOR_USAGE, SET_SIMULATION_TIME, SET_TASKS } from "../actions/actionsType";
+import { ISetAlgorithm, ISetProcessorUsage, ISetSimulationTime, ISetTasks, ISetTasksInSimulation, SET_ALGORITHM, SET_PROCESSOR_USAGE, SET_SIMULATION_TIME, SET_TASKS, SET_TASKS_IN_SIMULATION } from "../actions/actionsType";
 
 export const tasksReducer = (state: Task[] = [], action: ISetTasks) => {
   switch (action.type) {
@@ -35,6 +36,16 @@ export const simulationTimeReducer = (state: number = 0, action: ISetSimulationT
 export const algorithmReducer = (state: AlgorithmType = "PRIORITY", action: ISetAlgorithm) => {
   switch (action.type) {
     case SET_ALGORITHM:
+      state = action.payload
+      return state
+    default:
+      return state
+  }
+}
+
+export const tasksInSimulationReducer = (state: Array<TasksInSimulation[]> = [], action: ISetTasksInSimulation) => {
+  switch (action.type) {
+    case SET_TASKS_IN_SIMULATION:
       state = action.payload
       return state
     default:

@@ -1,6 +1,7 @@
-import { ISetAlgorithm, ISetProcessorUsage, ISetSimulationTime, ISetTasks, SET_ALGORITHM, SET_PROCESSOR_USAGE, SET_SIMULATION_TIME, SET_TASKS } from "./actionsType"
+import { ISetAlgorithm, ISetProcessorUsage, ISetSimulationTime, ISetTasks, ISetTasksInSimulation, SET_ALGORITHM, SET_PROCESSOR_USAGE, SET_SIMULATION_TIME, SET_TASKS, SET_TASKS_IN_SIMULATION } from "./actionsType"
 import { Task } from '../../models/Task/TaskInterface'
 import { AlgorithmType } from "../../models/Algorithm/AlgorithmType"
+import { TasksInSimulation } from "../../models/Simulation/TaskInSimulationInterface"
 
 export const setTasks = (payload: Task[]): ISetTasks => {
   return {
@@ -26,6 +27,13 @@ export const setSimulationTime = (payload: number): ISetSimulationTime => {
 export const setAlgorithm = (payload: AlgorithmType): ISetAlgorithm => {
   return {
     type: SET_ALGORITHM,
+    payload
+  }
+}
+
+export const setTasksInSimulation = (payload: Array<TasksInSimulation[]>): ISetTasksInSimulation => {
+  return {
+    type: SET_TASKS_IN_SIMULATION,
     payload
   }
 }
