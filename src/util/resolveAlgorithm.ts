@@ -4,6 +4,7 @@ import { ALGORITHM_TYPES } from '../config/config'
 import resolvePriorityAlgorithm from "../models/Algorithm/Priority/PriorityAlgorithm";
 import resolveEDF from "../models/Algorithm/EDF/EDFAlgorithm";
 import { TasksInSimulation } from "../models/Simulation/TaskInSimulationInterface";
+import resolveDMSAlgorithm from "../models/Algorithm/DMS/DMSAlgorithm";
 
 export const resolveAlgorithm = (tasks: Task[], simulationTime: number, algorithm: AlgorithmType): Array<TasksInSimulation[]> => {
   switch(algorithm) {
@@ -12,7 +13,6 @@ export const resolveAlgorithm = (tasks: Task[], simulationTime: number, algorith
     case "EDF":
       return resolveEDF(tasks, simulationTime)
     case "DMS":
-      // TODO: Change to proper algorithm after implement it
-      return resolvePriorityAlgorithm(tasks, simulationTime)
+      return resolveDMSAlgorithm(tasks, simulationTime)
   }
 }
