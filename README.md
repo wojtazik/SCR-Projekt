@@ -12,7 +12,7 @@ Please feel free to use this project to any demant
 You require Node in min v10.19.0 version, and NPM in min v6.14.4 version, which is delivered with node
 
 ### Run project
-To run project you must type command `npm instlall`, and wait for package installed
+To run project you must type command `npm install`, and wait for package installed
 If you have installed packages, you can use the following commands:
 
 ### `npm start`
@@ -22,12 +22,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\
