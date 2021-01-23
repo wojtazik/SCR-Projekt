@@ -69,6 +69,11 @@ const RandomizeTasksPopup: React.FC<RandomizeTasksPopupComponentInterface> = (pr
               </div>
 
               <button onClick={onTogglePopupOpen}>OK</button>
+              <p>
+                Max execution time must be lower than min period and min deadline
+                <br/>
+                Max deadline must be lower than min period
+              </p>
           </div>
       </div>
     )
