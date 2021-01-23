@@ -13,7 +13,6 @@ export default (tasks: Task[]): number => {
             return i % period === 0
         })
 
-        console.log(i, isHyperperiod)
         if (i !== 0 && isHyperperiod) {
             return  i
         }

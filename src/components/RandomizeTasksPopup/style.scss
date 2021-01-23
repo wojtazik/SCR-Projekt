@@ -1,0 +1,46 @@
+.random-tasks-popup {
+  &__overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,.4);
+  }
+
+  &__content {
+    min-width: 450px;
+    min-height: 400px;
+    background: #fff;
+    box-shadow: 0 0 10px 15px rgba(255,255,255,.2);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+  }
+
+  &__title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  &__unit {
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    & > * {
+      margin-right: 10px;
+    }
+  }
+
+  &__input {
+    max-width: 50px;
+  }
+
+  &__unit-label {
+    min-width: 200px;
+  }
+}

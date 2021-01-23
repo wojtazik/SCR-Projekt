@@ -5,6 +5,7 @@ import './style.scss'
 import SingleTaskForm from '../SingleTaskForm/index'
 import { Task } from '../../models/Task/TaskInterface'
 import calculateProcessorUsage from '../../util/calculateProcessorUsage'
+import RandomizeTasksPopup from '../RandomizeTasksPopup'
 
 export type TaskManagementComponentInterface = {
 
@@ -50,6 +51,7 @@ const TaskManagementForm = (props: TaskManagementComponentInterface) => {
         <button className="task-management__action-input" onClick={onChangeShouldAddEmptyTaskLine}>New task</button>
         <label>Simulation time:</label>
         <input type="number" max={200} min={0} onChange={onSetSimulationTime} className="task-management__action-input" />
+        <RandomizeTasksPopup /> 
         {
           simulationTime > 0 && tasks.length > 0 && (
            <>
