@@ -1,4 +1,4 @@
-import { cloneDeep, findIndex, indexOf, reduce } from 'lodash'
+import { cloneDeep } from 'lodash'
 import { TasksInSimulation, TaskState } from '../../Simulation/TaskInSimulationInterface'
 import { Task } from '../../Task/TaskInterface'
 
@@ -11,33 +11,16 @@ const resolveEDF = (tasks: Task[], simulationTime: number): Array<TasksInSimulat
   let tasksCurrentDeadline = tasks.map((task: Task) => task.deadline)
   let tasksCurrentUnitsLeft = tasks.map((task:Task) => task.executionTime)
   let tasksFinishedCountForDl = tasks.map((task: Task) => 0)
-
-  let tasksInSimulation: Array<TasksInSimulation[]> = []
-
-
-  /*
-    jeśli aktualnie jest deadline, i ilość pozostałych unitów jest większa od 0
-    rejestruj aktualną ilość wykonanych unitów
-    jeśli w momencie zakończenia zadania ilość wykonanych unitów w deadlinie
-    jest większa od zera, dodaj deadline do local deadline
-  */
-
-// jeśli zadanie zostało zakończone po terminie, też dodać deadline
+  let tasksInSimulation: Array<TasksInSimulation[]> = tasksToModify.map((task: Task) => [])
 
   for(let i = 0; i < simulationTime; i++) {
-    console.log('------------START')
     tasksToModify.forEach((task: Task, index) => {
       if(i !==0 && i % task.period === 0) {
-        //jeśli aktualna chwila czasu jest podzielna przez okres
-        //dodaj kolejne zadanie do wykonania
         tasksCurrentUnitsLeft[index] += task.executionTime
       }
     })
 
-    console.log('Deadlines:', tasksCurrentDeadline)
-    console.log('UnitesLeft:', tasksCurrentUnitsLeft)
     const taskToExecIndex = selectTaskToExecute(tasksCurrentUnitsLeft, tasksCurrentDeadline)
-    console.log('EXEC:',taskToExecIndex, "   LOOP: ", i)
 
     if(tasksCurrentUnitsLeft[taskToExecIndex] === 0) {
       tasksCurrentDeadline[taskToExecIndex] += tasks[taskToExecIndex].deadline
@@ -61,26 +44,18 @@ const resolveEDF = (tasks: Task[], simulationTime: number): Array<TasksInSimulat
           tasksFinishedCountForDl[index] = tasksCurrentUnitsLeft[index]
       }      
     })
-    console.log(tasksFinishedCountForDl)
-    console.log('kk', tasksCurrentUnitsLeft[taskToExecIndex])
-
-    //POPRACUJ NAD TYM
     
-    console.log('Frytki:', tasksFinishedCountForDl[taskToExecIndex], tasksCurrentUnitsLeft[taskToExecIndex])
     if(tasksFinishedCountForDl[taskToExecIndex] > 0 && tasksCurrentUnitsLeft[taskToExecIndex] % tasks[taskToExecIndex].executionTime === 0) {
-      console.log('should be there with task ', taskToExecIndex)
-      
       tasksCurrentDeadline[taskToExecIndex] += tasks[taskToExecIndex].deadline
     }
 
-    // USTAWIENIE TASKÓW W STANIE
+    tasksToModify.forEach((task: Task, index: number) => {
 
-    // tasksToModify.forEach((task: Task, index: number) => {
-    //   tasksToModify[index].taskInSimulation[i] = {
-    //     taskState: taskToExecIndex === index ? TaskState.WORKING : tasksFinishedCountForDl[i] > 0 && tasksCurrentUnitsLeft[i] > 0 ? TaskState.INTERRUPTED : TaskState.INTERRUPTED,
-    //     isTaskOverdue: i === tasksToModify[index].deadline && tasksCurrentUnitsLeft[index] > 0
-    //   }
-    // })
+      tasksInSimulation[index][i] = {
+        taskState: taskToExecIndex === index ? TaskState.WORKING : tasksFinishedCountForDl[i] > 0 && tasksCurrentUnitsLeft[i] > 0 ? TaskState.INTERRUPTED : TaskState.INACTIVE,
+        isTaskOverdue: i === tasksToModify[index].deadline && tasksCurrentUnitsLeft[index] > 0
+        }
+    })
   }
 
   return tasksInSimulation
