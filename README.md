@@ -1,10 +1,19 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Description
 
-## Available Scripts
+This project is simple representation of tasks scheduling with DMS, EDF and priority algorithm
+Created for the needs of laboratory classes at the Poznan University of technology
 
-In the project directory, you can run:
+Project Authors: Patryk Wojtas, Krzysztof Juszczak
+Please feel free to use this project to any demant
+
+
+### Requirements
+You require Node in min v10.19.0 version, and NPM in min v6.14.4 version, which is delivered with node
+
+### Run project
+To run project you must type command `npm instlall`, and wait for package installed
+If you have installed packages, you can use the following commands:
 
 ### `npm start`
 
