@@ -8,7 +8,6 @@ import GanntChartPlaceholder from './components/GanntChartPlaceholder/index'
 function App() {
   return (
     <div>
-      <h1>Hello Alabama</h1>
       <div>
         <TaskManagementForm /> 
         <div style={{margin: "30px"}}>

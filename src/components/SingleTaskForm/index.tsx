@@ -3,6 +3,7 @@ import { Task } from '../../models/Task/TaskInterface'
 import useComponent from './hook'
 import { taskParams } from '../../models/Task/TaskInterface'
 import { ErrorInterface } from '../../models/Error/ErrorInterface'
+import './style.scss'
 
 export type SingleTaskFormComponentInterface = {
   task?: Task,
@@ -75,9 +76,9 @@ const SingleTaskForm: React.FC<SingleTaskFormComponentInterface> = (props: Singl
             onTaskParamChange(parseInt(event.currentTarget.value), taskParams.PRIORITY) 
           }}
         />
-        <button onClick={onTaskRemove}>Delete</button>
+        <button onClick={onTaskRemove} className="single-task__remove">Delete</button>
       </div>
-      <div>
+      <div className="single-task__errors">
         {renderInputErrors()}
       </div>
     </>

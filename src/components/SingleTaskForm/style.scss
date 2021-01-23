@@ -1,3 +1,39 @@
 .single-task {
-  
+  margin-bottom: 10px;
+
+  &__field {
+    width: 150px;
+    box-sizing: border-box;
+    padding: 5px;
+    font-size: 1rem;
+    background: rgba(255,255,255, .6);
+    border-radius: 3px;
+    outline: none;
+  }
+
+  &__remove {
+    box-sizing: border-box;
+    padding: 5px;
+    font-size: 1rem;
+    background: rgba(255,255,255, .6);
+    border-radius: 3px;
+    outline: none;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+
+  &__errors {
+      font-size: 14.4px;
+      color: red;
+      & > * {
+        padding: 5px;
+        border: 1px solid red;
+        display: inline-block;
+        margin: 5px;
+        margin-top: 0;
+        margin-left: 0;
+        border-radius: 3px;
+        background: rgba(255,0,0,.1);
+      }
+  }
 }

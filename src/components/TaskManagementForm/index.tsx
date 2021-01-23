@@ -39,16 +39,17 @@ const TaskManagementForm = (props: TaskManagementComponentInterface) => {
   }, [shouldAddEmptyTaskLine, tasks])
 
   return (
-    <div>
+    <div className="task-management__wrapper">
       <div className="task-management__topbar">
-        <select onChange={onSelectAlgorithm} defaultValue={selectedAlgorithm}>
+        <label htmlFor="priority" className="ask-management__priority-labelt">Set priority:</label>
+        <select onChange={onSelectAlgorithm} defaultValue={selectedAlgorithm} name="priority" className="task-management__action-input">
           {ALGORITHM_TYPES.map((type: string) => (
             <option key={type} value={type}>{type}</option>
           ))}
         </select>
-        <button className="task-management__new-task" onClick={onChangeShouldAddEmptyTaskLine}>New task</button>
-        <label>Set simulation time:</label>
-        <input type="number" max={200} min={0} onChange={onSetSimulationTime}/>
+        <button className="task-management__action-input" onClick={onChangeShouldAddEmptyTaskLine}>New task</button>
+        <label>Simulation time:</label>
+        <input type="number" max={200} min={0} onChange={onSetSimulationTime} className="task-management__action-input" />
         {
           simulationTime > 0 && tasks.length > 0 && (
            <>

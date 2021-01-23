@@ -1,4 +1,12 @@
 .task-management {
+  &__wrapper {
+    margin: 30px;
+    padding: 10px;
+    border: 1px solid rgb(180,180,180);
+    background: rgb(245,245,245);
+    box-shadow: 0 0 10px 15px rgba(0,0,0,.1);
+  }
+
   &__tasks {
     display: flex;
     flex-direction: column;
@@ -16,9 +24,33 @@
   &__topbar {
     display: flex;
     flex-direction: row;
+    align-items: center;
+
+    & > * {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+
+  &__action-input {
+    padding: 5px;
+    font-size: 1rem;
+    background: rgba(255,255,255, .6);
+    border-radius: 3px;
+    outline: none;
   }
 
   &__new-task {
     margin-left: 15px;
+    padding: 5px;
+    font-size: 1rem;
+    background: rgba(255,255,255, .6);
+    border-radius: 3px;
+    outline: none;
+    margin-right: 15px;
+  }
+
+  &__priority-label {
+    margin-right: 5px;
   }
 }

@@ -1,4 +1,4 @@
-import { Task, taskParams } from "../models/Task/TaskInterface";
+import { Task } from "../models/Task/TaskInterface";
 
 export default (tasks: Task[]): number => {
     let hyperperiod = 1
@@ -12,8 +12,10 @@ export default (tasks: Task[]): number => {
         let isHyperperiod = tasksPeriods.every((period: number) => {
             return i % period === 0
         })
-        if (isHyperperiod) {
-            hyperperiod = i
+
+        console.log(i, isHyperperiod)
+        if (i !== 0 && isHyperperiod) {
+            return  i
         }
     }
 
