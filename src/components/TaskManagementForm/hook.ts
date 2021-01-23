@@ -6,6 +6,7 @@ import { StateInterface } from '../../models/state/StateInterface'
 import { setAlgorithm, setSimulationTime } from '../../store/actions/actions'
 import { Task } from '../../models/Task/TaskInterface'
 import usePrevious from '../../hook/usePrevious'
+import calculateHiperperiod from '../../util/calculateHiperperiod'
 
 export type TaskManagementHookInterface = {
   selectedAlgorithm: AlgorithmType,
@@ -13,12 +14,15 @@ export type TaskManagementHookInterface = {
   tasks: Task[],
   shouldAddEmptyTaskLine: boolean,
   onChangeShouldAddEmptyTaskLine: VoidFunction,
-  onSetSimulationTime: React.ChangeEventHandler
+  onSetSimulationTime: React.ChangeEventHandler,
+  onCalculateHyperperiod: (tasks: Task[]) => number,
+  simulationTime: number
 }
 
 const useComponent = (props: TaskManagementComponentInterface) => {
   const dispatch = useDispatch()
   const selectedAlgorithm: AlgorithmType = useSelector((state: StateInterface) => state.algorithm)
+  const simulationTime: number = useSelector((state: StateInterface) => state.simulationTime)
   const tasks: Task[] = useSelector((state: StateInterface) => state.tasks)
   const [shouldAddEmptyTaskLine, onSetShouldAddEmptyTaskLine] = useState<boolean>(false)
   const prevTasks = usePrevious(tasks)
@@ -35,6 +39,10 @@ const useComponent = (props: TaskManagementComponentInterface) => {
     dispatch(setSimulationTime(parseInt(event.target.value)))
   }, [])
 
+  const onCalculateHyperperiod = useCallback(() => {
+    return calculateHiperperiod(tasks)
+  }, [tasks])
+
   useLayoutEffect(() => {
     //@ts-ignore
     if(prevTasks && (prevTasks).length < tasks.length) {
@@ -48,7 +56,9 @@ const useComponent = (props: TaskManagementComponentInterface) => {
     tasks,
     shouldAddEmptyTaskLine,
     onChangeShouldAddEmptyTaskLine,
-    onSetSimulationTime
+    onSetSimulationTime,
+    onCalculateHyperperiod,
+    simulationTime
   }
 }
 

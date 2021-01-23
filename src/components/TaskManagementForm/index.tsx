@@ -4,6 +4,7 @@ import useComponent from './hook'
 import './style.scss'
 import SingleTaskForm from '../SingleTaskForm/index'
 import { Task } from '../../models/Task/TaskInterface'
+import calculateProcessorUsage from '../../util/calculateProcessorUsage'
 
 export type TaskManagementComponentInterface = {
 
@@ -17,7 +18,9 @@ const TaskManagementForm = (props: TaskManagementComponentInterface) => {
     tasks,
     onChangeShouldAddEmptyTaskLine,
     shouldAddEmptyTaskLine,
-    onSetSimulationTime
+    onSetSimulationTime,
+    onCalculateHyperperiod,
+    simulationTime
   } = useComponent(props)
 
   const renderTasksList = useCallback(() => {
@@ -46,6 +49,22 @@ const TaskManagementForm = (props: TaskManagementComponentInterface) => {
         <button className="task-management__new-task" onClick={onChangeShouldAddEmptyTaskLine}>New task</button>
         <label>Set simulation time:</label>
         <input type="number" max={200} min={0} onChange={onSetSimulationTime}/>
+        {
+          simulationTime > 0 && tasks.length > 0 && (
+           <>
+            <div>
+              <span>
+                Hyperperiod: {onCalculateHyperperiod()}
+              </span>
+            </div>
+            <div>
+              <span>
+                Processor Usage: {calculateProcessorUsage(tasks, simulationTime)}
+              </span>
+            </div>
+           </> 
+          )
+        }
       </div>
 
       <div className="task-management__tasks">
